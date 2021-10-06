@@ -9,9 +9,9 @@ from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = guess_terminal()
-color = "#dd6633"
-color_light = "#ff8855"
-color_light2 = "#ffaa77"
+color = "#00FFFF"
+color_light = "#FF0000"
+color_light2 = "#00B7EB"
 back = "#222222"
 
 keys = [
@@ -41,20 +41,23 @@ keys = [
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("alacritty"), desc="Launch terminal"),
 
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "p", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
 
+    Key([mod, "control"], "x", lazy.spawn("systemctl suspend")),
     Key([mod, "control"], "r", lazy.restart(), desc="Restart qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown qtile"),
     Key([mod], "m", lazy.spawn("rofi -show drun")),
     Key([mod, "shift"], "m", lazy.spawn("rofi -show")),
-    Key([mod], "e", lazy.spawn("sudo thunar")),
+    Key([mod], "e", lazy.spawn("thunar")),
     Key([mod], "b", lazy.spawn("google-chrome-stable")),
     Key([mod], "l", lazy.layout.grow()),
     Key([mod], "h", lazy.layout.shrink()),
+    Key([mod], "c", lazy.spawn("code")),
+    
 
     Key([mod], "f", lazy.window.toggle_floating()),
     # ----- Close Windows 
@@ -62,10 +65,10 @@ keys = [
 
     # ----- Volume and Brightness
 
-    Key([], "XF86AudioLowerVolume", lazy.spawn(
+    Key([mod], "8", lazy.spawn(
         "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     )),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn(
+    Key([mod], "9", lazy.spawn(
         "pactl set-sink-volume @DEFAULT_SINK@ +5%"
     )),
     Key([], "XF86AudioMute", lazy.spawn(
@@ -81,7 +84,8 @@ __groups = {
     1: Group("TER"),
     2: Group("WWW"),
     3: Group("DEV"),
-    0: Group("MUS"),
+    4: Group("MUS"),
+    5: Group("GAM"),
 }
 groups = [__groups[i] for i in __groups]
 
@@ -107,15 +111,15 @@ for i in groups:
     ])
 
 layouts = [
-    # layout.Max(),
-    # layout.Stack(num_stacks=2),
+    layout.Max(),
+    #layout.Stack(num_stacks=2),
     # Try more layouts by unleashing below layouts.
-    # layout.Bsp(),
-    # layout.Columns(),
-    # layout.Matrix(),
+    #layout.Bsp(),
+    #layout.Columns(),
+    #layout.Matrix(),
     layout.MonadTall(
-        border_normal="#222222",
-        border_focus="#ff4400",
+        border_normal="#B2EBF2",
+        border_focus="#00BCD4",
         border_width=3,
         single_border_width=0,
         margin=6,
@@ -219,10 +223,11 @@ wmname = "LG3D"
 
 autostart = [
         "setxkbmap es",
-        "feh --bg-fill /home/gerry/wallpaper.jpg",
-        "picom --no-vsync &",
+        "feh --bg-fill /home/josu/Downloads/gato.jpg",
+        "picom &",
         "nm-applet &",
 ]
 
 for x in autostart:
     os.system(x)
+
